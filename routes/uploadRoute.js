@@ -48,24 +48,6 @@ app.post('/api/v1/uploadPost', upload_1_img.single('image'), (req, res, next) =>
     }
 })
 
-// app.get("/api/v1/uploadGetAll", (req, res) => {
-//     uploadModel.find({})
-//
-// })
-
-// app.delete("/api/v1/uploadDelete/:id" , (req,res) => {
-//     console.log(req.params.id)
-//     const del = uploadModel.deleteOne({_id: req.params.id})
-//     try{
-//         del.save()
-//         res.json("удалено")
-//     }catch (e) {
-//         console.log(e)
-//     }
-//
-// })
-
-
 app.delete("/api/v1/uploadDelete/:id" , async (req , res) => {
     try{
         await uploadModel.deleteOne({_id: req.params.id});
@@ -74,6 +56,28 @@ app.delete("/api/v1/uploadDelete/:id" , async (req , res) => {
     } catch (e)  {
         res.status(500).send(e)
     }
+})
+
+
+app.put("api/v1/uploadpatch/:id" , async (req,res) => {
+    console.log(req.params.id)
+    res.json(res.send(req.params.id))
+    // try{
+    //     console.log(req.params.id)
+    //     await uploadModel.findByIdAndUpdate({_id: req.params.id}, {
+    //         name: req.body.name,
+    //         image: {
+    //             data: req.file.originalname,
+    //             contentType: "image/png"
+    //         },
+    //         link: req.body["link"],
+    //     });
+    //     await uploadModel.save()
+    //         .then(() => console.log("успешно изменено"))
+    //     return res.json({message: "изменено"})
+    // } catch (e)  {
+    //     res.status(500).send(e)
+    // }
 })
 
 module.exports = app
