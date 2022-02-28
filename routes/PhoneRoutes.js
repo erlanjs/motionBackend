@@ -44,23 +44,9 @@ app.post("/api/v1/phone" , async (req , res) => {
             console.log(err , "ошибкафф")
         })
 
-
-
         await phone.save()
 
-        const token = "1912778515:AAEB8YA-DWf5FS6SIU9Gi5QHMpuBVsnoe3s";
-        const id2 = "547616061";
 
-        const newZapisDev = [
-            `<b>Name: <i> ${req.body.name}</i></b>`,
-            `<b>Phone: <i>${req.body.phone}</i></b>`,
-            `<b>Select: <i>${req.body.select}</i></b>`,
-        ];
-        let msg2 = "";
-        newZapisDev.forEach((i) => {
-            msg2 += i+"\n"
-        })
-        http.post(encodeURI(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${id2}&parse_mode=html&text=${msg2}`))
 
 
         res.status(200).json(phone)

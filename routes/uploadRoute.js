@@ -1,10 +1,8 @@
 const express = require('express')
 const app = express()
 const uploadModel = require("../models/parthfelioModels")
-const upload = require("../moddelware/upload")
 app.use(express.json())
 const multer = require("multer")
-const phoneModal = require("../models/phoneNumber");
 
 
 const storage = multer.diskStorage({
@@ -59,25 +57,24 @@ app.delete("/api/v1/uploadDelete/:id" , async (req , res) => {
 })
 
 
-app.put("api/v1/uploadpatch/:id" , async (req,res) => {
-    console.log(req.params.id)
-    res.json(res.send(req.params.id))
-    // try{
-    //     console.log(req.params.id)
-    //     await uploadModel.findByIdAndUpdate({_id: req.params.id}, {
-    //         name: req.body.name,
-    //         image: {
-    //             data: req.file.originalname,
-    //             contentType: "image/png"
-    //         },
-    //         link: req.body["link"],
-    //     });
-    //     await uploadModel.save()
-    //         .then(() => console.log("успешно изменено"))
-    //     return res.json({message: "изменено"})
-    // } catch (e)  {
-    //     res.status(500).send(e)
-    // }
+app.patch("/api/v1/uploadpatch/:id" , upload_1_img.single('image') , async (req,res) => {
+    try{
+        console.log(req.params.id)
+        await uploadModel.findByIdAndUpdate({_id: req.params.id}, {
+            name: req.body.name,
+            image: {
+                data: req.file.originalname,
+                contentType: "image/png"
+            },
+            link: req.body["link"],
+        });
+        await uploadModel.save()
+            .then(() => console.log("успешно изменено"))
+            .catch(e => console.log(e))
+        return res.json({message: "изменено"})
+    } catch (e)  {
+        console.log(e)
+    }
 })
 
 module.exports = app
