@@ -19,7 +19,9 @@ mongoose.connect("mongodb+srv://Askar:qwertyu@cluster0.uolwl.mongodb.net/motionW
 app.use(express.static(path.resolve(__dirname , "images")))
 app.use(phoneRoutes)
 app.use(uploadRoute)
-
+app.get("/" , (req,res) => {
+    res.json("BackEnd true")
+})
 
 
 app.listen(PORT , () => console.log("BackEnd-Иштеди"))
